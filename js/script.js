@@ -56,6 +56,12 @@ mainContainer.addEventListener('click', function(event){
         responsibilites
     }
 
-    console.log(cardsInformation)
+    // console.log(cardsInformation)
+   const cardNameExist = interviewList.find(item=> item.companyName == cardsInformation.companyName);
+   if(!cardNameExist){
+    interviewList.push(cardsInformation);
+   }
+
+   console.log(interviewList);
     
 })
