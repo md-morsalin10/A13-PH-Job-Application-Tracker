@@ -1,12 +1,19 @@
 let interviewList = [];
 let rejectList = [];
-let currentStatus = "all-filter-btn"
+let currentStatus = "all-filter-btn";
 
 // for count 
 const totalCount = document.getElementById('total');
 const interviewCount = document.getElementById('interview-count');
 const rejectedCount = document.getElementById('reject-count');
+const availableCount= document.getElementById('available-count');
 
+
+
+//get all btn-filter
+const allFilterBtn = document.getElementById("all-filter-btn");
+const interviewBtn = document.getElementById("interview-btn");
+const rejectedBtn = document.getElementById("rejected-btn");
 // get main tag for event delegation
 const mainContainer = document.querySelector('main');
 
@@ -20,16 +27,28 @@ function calculateCount() {
     totalCount.innerText = cardsSection.children.length;
     interviewCount.innerText = interviewList.length;
     rejectedCount.innerText = rejectList.length;
+    availableCount.innerText = cardsSection.children.length + ' Jobs ';
 
+    const noJobView = document.getElementById('no-jobs-view');
+
+    if (currentStatus === 'interview-btn' && interviewList.length === 0) {
+        noJobView.classList.remove('hidden');
+    } 
+    else if (currentStatus === 'rejected-btn' && rejectList.length === 0) {
+        noJobView.classList.remove('hidden');
+    } 
+    else if (currentStatus === 'all-filter-btn' && cardsSection.children.length === 0) {
+        noJobView.classList.remove('hidden'); 
+    }
+    else {
+        noJobView.classList.add('hidden'); 
+    }
 
 }
 calculateCount()
 
-//get all btn-filter
-const allFilterBtn = document.getElementById("all-filter-btn");
-const interviewBtn = document.getElementById("interview-btn");
-const rejectedBtn = document.getElementById("rejected-btn");
-
+ 
+   
 // machine btn toggle click function
 function toggleClick(id) {
     allFilterBtn.classList.remove('btn-primary')
@@ -43,25 +62,31 @@ function toggleClick(id) {
     const selectedBtn = document.getElementById(id);
     selectedBtn.classList.add('btn-primary');
     currentStatus = id
+    
+
 
     if (id == 'interview-btn') {
         cardsSection.classList.add('hidden');
         filterJobCardSection.classList.remove('hidden')
+       
         renderInterviewSec();
     }
     else if (id == 'all-filter-btn') {
         cardsSection.classList.remove('hidden')
         filterJobCardSection.classList.add('hidden')
+
+        availableCount.innerText = cardsSection.children.length + " jobs";
     }
     else if (id == 'rejected-btn') {
         cardsSection.classList.add('hidden');
         filterJobCardSection.classList.remove('hidden')
         renderRejectedSec();
     }
+    calculateCount();
 }
 
 mainContainer.addEventListener('click', function (event) {
-    // console.log(event.target.classList.contains('card-interview-btn'))
+    
     
 
     if (event.target.classList.contains('card-interview-btn')) {
@@ -127,11 +152,8 @@ mainContainer.addEventListener('click', function (event) {
         calculateCount()
 
     }
-
-
-
-
-else if (event.target.closest('.deleted-btn')) {
+    // for delete trash icon btn
+     else if (event.target.closest('.deleted-btn')) {
     const cardWrapper = event.target.closest('.cards-container');
 
     if (cardWrapper) {
@@ -144,14 +166,15 @@ else if (event.target.closest('.deleted-btn')) {
     
         calculateCount();
     }
-}
+   }
+
 })
 
 
 
 
 function renderInterviewSec() {
-
+    availableCount.innerText = interviewList.length + " jobs";
     filterJobCardSection.innerHTML = '';
     
     
@@ -194,6 +217,7 @@ function renderInterviewSec() {
 }
 
 function renderRejectedSec() {
+    availableCount.innerText = rejectList.length + " jobs";
     filterJobCardSection.innerHTML = '';
     
     for (let reject of rejectList) {
@@ -232,18 +256,8 @@ function renderRejectedSec() {
     
 }
 
-// updateView(interviewList, filterJobCardSection);
-// updateView(interviewList, filterJobCardSection);
-// function updateView(list, section) {
-//     const noJobsView = document.getElementById('no-jobs-view');
-    
-//     if (list.length === 0) {
-//         section.classList.add('hidden'); 
-//         noJobsView.classList.remove('hidden'); 
-//     } else {
-//         section.classList.remove('hidden');
-//         noJobsView.classList.add('hidden'); 
-//     }
-// }
 
-// document.querySelector('')
+
+
+
+

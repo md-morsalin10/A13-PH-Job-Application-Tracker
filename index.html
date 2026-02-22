@@ -24,9 +24,6 @@
             font-family: "Geist", sans-serif;
         }
 
-        .statusClass {
-            color: btn-primary;
-        }
     </style>
 </head>
 
@@ -65,7 +62,7 @@
                     <p class="font-semibold text-xl text-[#002c5cFF]">Available Jobs</p>
                 </div>
                 <div>
-                    <p id="available-count" class="text-[#64748B] font-semibold">0 <span>jobs</span></p>
+                    <p id="available-count" class="text-[#64748B] font-semibold">0<span>jobs</span></p>
                 </div>
             </div>
 
@@ -74,8 +71,8 @@
 
             </section>
             <!-- no jobs available -->
-            <section id="no-jobs-view" class="hidden">
-                <div class="flex flex-col items-center justify-center py-20 text-center">
+            <section id="no-jobs-view" class="hidden w-11/12 mx-auto">
+                <div class="flex flex-col items-center rounded-lg  bg-base-100 justify-center py-20 text-center">
                     <img src="./assets/node.png" class="w-32 opacity-60 mb-4">
                     <h2 class="text-2xl font-bold text-[#002C5C]">No jobs available</h2>
                     <p class="text-gray-500">Check back soon for new job opportunities</p>
