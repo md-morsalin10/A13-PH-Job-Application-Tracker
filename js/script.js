@@ -20,6 +20,8 @@ function calculateCount() {
     totalCount.innerText = cardsSection.children.length;
     interviewCount.innerText = interviewList.length;
     rejectedCount.innerText = rejectList.length;
+
+
 }
 calculateCount()
 
@@ -59,7 +61,8 @@ function toggleClick(id) {
 }
 
 mainContainer.addEventListener('click', function (event) {
-    console.log(event.target.classList.contains('card-interview-btn'))
+    // console.log(event.target.classList.contains('card-interview-btn'))
+    
 
     if (event.target.classList.contains('card-interview-btn')) {
 
@@ -67,7 +70,7 @@ mainContainer.addEventListener('click', function (event) {
         const companyName = parentNode.querySelector('.company-name').innerText;
         const postOfJob = parentNode.querySelector('.post-of-job').innerText;
         const facilities = parentNode.querySelector('.facilities').innerText;
-        const applicationStatus = parentNode.querySelector('.application-status').innerText;
+        const applicationStatus = 'Interviewed'
         const responsibilites = parentNode.querySelector('.responsibilites').innerText;
 
 
@@ -78,12 +81,12 @@ mainContainer.addEventListener('click', function (event) {
             applicationStatus,
             responsibilites
         }
-
+        parentNode.querySelector('.application-status').innerText = 'Interviewed';
+        parentNode.querySelector('.application-status').classList.add('btn-success');
         // console.log(cardsInformation)
         const cardNameExist = interviewList.find(item => item.companyName == cardsInformation.companyName);
 
-        parentNode.querySelector('.application-status').innerText = 'Interviewed'
-        parentNode.querySelector('.application-status').classList.add('btn-success')
+
         if (!cardNameExist) {
             interviewList.push(cardsInformation);
         }
@@ -97,7 +100,7 @@ mainContainer.addEventListener('click', function (event) {
         const companyName = parentNode.querySelector('.company-name').innerText;
         const postOfJob = parentNode.querySelector('.post-of-job').innerText;
         const facilities = parentNode.querySelector('.facilities').innerText;
-        const applicationStatus = parentNode.querySelector('.application-status').innerText;
+        const applicationStatus = "Rejected";
         const responsibilites = parentNode.querySelector('.responsibilites').innerText;
 
 
@@ -105,7 +108,7 @@ mainContainer.addEventListener('click', function (event) {
             companyName,
             postOfJob,
             facilities,
-            applicationStatus: "Rejected",
+            applicationStatus,
             responsibilites
         }
 
@@ -118,23 +121,45 @@ mainContainer.addEventListener('click', function (event) {
             rejectList.push(cardsInformation);
         }
         interviewList = interviewList.filter(item => item.companyName != cardsInformation.companyName);
-        if(currentStatus == 'interview-btn'){
+        if (currentStatus == 'interview-btn') {
             renderInterviewSec()
         }
         calculateCount()
-        
+
     }
+
+
+
+
+else if (event.target.closest('.deleted-btn')) {
+    const cardWrapper = event.target.closest('.cards-container');
+
+    if (cardWrapper) {
+        const companyName = cardWrapper.querySelector('.company-name').innerText;
+       
+        cardWrapper.remove();
+       
+        interviewList = interviewList.filter(item => item.companyName !== companyName);
+        rejectList = rejectList.filter(item => item.companyName !== companyName);
+    
+        calculateCount();
+    }
+}
 })
+
 
 
 
 function renderInterviewSec() {
 
     filterJobCardSection.innerHTML = '';
+    
+    
 
     for (let interview of interviewList) {
         let div = document.createElement('div')
-        div.className = " p-6 bg-base-100 rounded-[10px] mb-4"
+        div.className = "cards-container p-6 bg-base-100 rounded-[10px] mb-4"
+        // div.className = "cards-container";
         div.innerHTML = `
        <div class="flex justify-between">
                     <div class="space-y-5">
@@ -163,15 +188,17 @@ function renderInterviewSec() {
         `
 
         filterJobCardSection.appendChild(div)
+        
     }
+   
 }
 
 function renderRejectedSec() {
     filterJobCardSection.innerHTML = '';
-
+    
     for (let reject of rejectList) {
         let div = document.createElement('div')
-        div.className = " p-6 bg-base-100 rounded-[10px] mb-4"
+        div.className = "cards-container p-6 bg-base-100 rounded-[10px] mb-4"
         div.innerHTML = `
        <div class="flex justify-between">
                     <div class="space-y-5">
@@ -183,7 +210,7 @@ function renderRejectedSec() {
                             <p class="facilities  text-[#64748B] pt-4">${reject.facilities}</p>
                         </div>
                         <div>
-                            <p class="application-status  btn font-bold text-[#64748B]">Not Applied</p>
+                            <p class="application-status  btn font-bold text-[#64748B]">${reject.applicationStatus}</p>
                             <p class="responsibilites text-[14px] text-[#323B49] pt-1.5">${reject.responsibilites}</p>
                         </div>
                         <div class="flex gap-4">
@@ -200,5 +227,23 @@ function renderRejectedSec() {
         `
 
         filterJobCardSection.appendChild(div)
+        
     }
+    
 }
+
+// updateView(interviewList, filterJobCardSection);
+// updateView(interviewList, filterJobCardSection);
+// function updateView(list, section) {
+//     const noJobsView = document.getElementById('no-jobs-view');
+    
+//     if (list.length === 0) {
+//         section.classList.add('hidden'); 
+//         noJobsView.classList.remove('hidden'); 
+//     } else {
+//         section.classList.remove('hidden');
+//         noJobsView.classList.add('hidden'); 
+//     }
+// }
+
+// document.querySelector('')
