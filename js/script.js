@@ -10,6 +10,9 @@ const rejectedCount = document.getElementById('reject-count');
 const mainContainer = document.querySelector('main');
 
 
+// get filter section 
+const filterJobCardSection = document.getElementById('filter-job-cards');
+
 // get cards 
 const cardsSection = document.getElementById('card');
 function calculateCount(){
@@ -36,10 +39,26 @@ function toggleClick(id){
 
     const selectedBtn = document.getElementById(id);
     selectedBtn.classList.add('btn-primary');
+
+    if(id =='interview-btn'){
+        cardsSection.classList.add('hidden');
+        filterJobCardSection.classList.remove('hidden')
+    }
+    else if(id == 'all-filter-btn'){
+        cardsSection.classList.remove('hidden')
+        filterJobCardSection.classList.add('hidden')
+    }
+    else if(id=='rejected-btn'){
+        cardsSection.classList.add('hidden');
+        filterJobCardSection.classList.remove('hidden')
+    }
 }
 
 mainContainer.addEventListener('click', function(event){
-    // console.log(event.target.parentNode.parentNode)
+    console.log(event.target.classList.contains('card-interview-btn'))
+
+    if(event.target.classList.contains('card-interview-btn')){
+
     const parentNode = event.target.parentNode.parentNode;
     const companyName = parentNode.querySelector('.company-name').innerText;
     const postOfJob = parentNode.querySelector('.post-of-job').innerText;
@@ -58,10 +77,118 @@ mainContainer.addEventListener('click', function(event){
 
     // console.log(cardsInformation)
    const cardNameExist = interviewList.find(item=> item.companyName == cardsInformation.companyName);
+
+   parentNode.querySelector('.application-status').innerText = 'Interviewed'
+   parentNode.querySelector('.application-status').classList.add('btn-success')
    if(!cardNameExist){
     interviewList.push(cardsInformation);
    }
+   calculateCount()
+   renderInterviewSec()
+    }
+    else if(event.target.classList.contains('card-reject-btn')){
 
-   console.log(interviewList);
+    const parentNode = event.target.parentNode.parentNode;
+    const companyName = parentNode.querySelector('.company-name').innerText;
+    const postOfJob = parentNode.querySelector('.post-of-job').innerText;
+    const facilities = parentNode.querySelector('.facilities').innerText;
+    const applicationStatus = parentNode.querySelector('.application-status').innerText;
+    const responsibilites = parentNode.querySelector('.responsibilites').innerText;
+
     
+    const cardsInformation ={
+        companyName, 
+        postOfJob, 
+        facilities, 
+        applicationStatus, 
+        responsibilites
+    }
+
+    // console.log(cardsInformation)
+   const cardNameExist = rejectList.find(item=> item.companyName == cardsInformation.companyName);
+
+   parentNode.querySelector('.application-status').innerText = 'Rejected'
+   parentNode.querySelector('.application-status').classList.add('btn-error')
+   if(!cardNameExist){
+    rejectList.push(cardsInformation);
+   }
+   calculateCount()
+   renderRejectedSec()
+    }
 })
+
+
+
+function renderInterviewSec(){
+    filterJobCardSection.innerHTML ='';
+
+    for(let interview of interviewList){
+        let div = document.createElement('div')
+        div.className = " p-6 bg-base-100 rounded-[10px] mb-4"
+        div.innerHTML = `
+       <div class="flex justify-between">
+                    <div class="space-y-5">
+                        <div class="job-content ">
+                            <div>
+                                <h2 class="company-name text-xl font-medium text-[#002C5C] ">${interview.companyName}</h2>
+                                <p class="post-of-job  text-[#64748B]">${interview.postOfJob}</p>
+                            </div>
+                            <p class="facilities  text-[#64748B] pt-4">${interview.facilities}</p>
+                        </div>
+                        <div>
+                            <p class="application-status  btn font-bold text-[#64748B]">${interview.applicationStatus}</p>
+                            <p class="responsibilites text-[14px] text-[#323B49] pt-1.5">${interview.responsibilites}</p>
+                        </div>
+                        <div class="flex gap-4">
+                            <button
+                                class="card-interview-btn btn btn-outline btn-success py-2 px-3 font-bold ">Interview</button>
+                            <button
+                                class="card-reject-btn btn btn-outline btn-error py-2 px-3 font-bold ">Rejected</button>
+                        </div>
+                    </div>
+                    <div>
+                        <button id="deleted-btn"><i class="fa-regular fa-trash-can"></i></button>
+                    </div>
+                </div>
+        `
+
+        filterJobCardSection.appendChild(div)
+    }
+}
+
+function renderRejectedSec(){
+    filterJobCardSection.innerHTML ='';
+
+    for(let reject of rejectList){
+        let div = document.createElement('div')
+        div.className = " p-6 bg-base-100 rounded-[10px] mb-4"
+        div.innerHTML = `
+       <div class="flex justify-between">
+                    <div class="space-y-5">
+                        <div class="job-content ">
+                            <div>
+                                <h2 class="company-name text-xl font-medium text-[#002C5C] ">${reject.companyName}</h2>
+                                <p class="post-of-job  text-[#64748B]">${reject.postOfJob}</p>
+                            </div>
+                            <p class="facilities  text-[#64748B] pt-4">${reject.facilities}</p>
+                        </div>
+                        <div>
+                            <p class="application-status  btn font-bold text-[#64748B]">Not Applied</p>
+                            <p class="responsibilites text-[14px] text-[#323B49] pt-1.5">${reject.responsibilites}</p>
+                        </div>
+                        <div class="flex gap-4">
+                            <button
+                                class="card-interview-btn btn btn-outline btn-success py-2 px-3 font-bold ">Interview</button>
+                            <button
+                                class="card-reject-btn btn btn-outline btn-error py-2 px-3 font-bold ">Rejected</button>
+                        </div>
+                    </div>
+                    <div>
+                        <button id="deleted-btn"><i class="fa-regular fa-trash-can"></i></button>
+                    </div>
+                </div>
+        `
+
+        filterJobCardSection.appendChild(div)
+    }
+}
