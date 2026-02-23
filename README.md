@@ -1,5 +1,7 @@
 1. What is the difference between getElementById, getElementsByClassName, and querySelector / querySelectorAll?
-answer : 
+
+
+   answer : 
     i. getElementById:
     getElementById is a JavaScript method used to select a single, specific element from  webpage by using  unique ID name. Its always return single element Object.
     syntax : document.getElementById('idName')
@@ -17,7 +19,8 @@ answer :
     syntax : document.querySelectorAll('.btn');
 
 2. How do you create and insert a new element into the DOM?
-answer :Here is the process to create and insert a new element into the DOM 
+
+   answer :Here is the process to create and insert a new element into the DOM 
         i. Create the Element
         First of all i need to create an element using  document.createElement() method . After that i will Add content and styles in that element. 
         
@@ -38,7 +41,8 @@ answer :Here is the process to create and insert a new element into the DOM
 
 
 3. What is Event Bubbling? And how does it work?
-answer :Event Bubbling is a way of handling events in the browser where an event (like a click) starts 
+
+    answer :Event Bubbling is a way of handling events in the browser where an event (like a click) starts 
         from the specific element where i clicked and then "bubbles up" to its parents, grandparents, and so on, until it reaches the very top of the page.
 
        1.  How It Works :
@@ -59,7 +63,8 @@ answer :Event Bubbling is a way of handling events in the browser where an event
 
 
 4. What is Event Delegation in JavaScript? Why is it useful?
-answer :Event Delegation is a technique in JavaScript where i can attach a single event listener to a parent 
+
+    answer :Event Delegation is a technique in JavaScript where i can attach a single event listener to a parent 
         element instead of adding multiple listeners to each individual child element.
 
         Why is it useful?
@@ -73,7 +78,9 @@ answer :Event Delegation is a technique in JavaScript where i can attach a singl
             It makes your code easier to manage because all the logic for a group of elements is in one place.
 
 5. What is the difference between preventDefault() and stopPropagation() methods?
-answer : While both methods are used to control how events behave in JavaScript.
+
+
+    answer : While both methods are used to control how events behave in JavaScript.
        Here is some difference between preventDefault() stopPropagation() methods:
 
        i.preventDefault() method:
