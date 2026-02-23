@@ -27,7 +27,21 @@ function calculateCount() {
     totalCount.innerText = cardsSection.children.length;
     interviewCount.innerText = interviewList.length;
     rejectedCount.innerText = rejectList.length;
-    availableCount.innerText = cardsSection.children.length + ' Jobs ';
+    
+
+    if (currentStatus === 'interview-btn') {
+        
+        availableCount.innerText = interviewList.length + ' of 8 Jobs';
+    } 
+    else if (currentStatus === 'rejected-btn') {
+        
+        availableCount.innerText = rejectList.length + ' of 8 Jobs';
+    } 
+    else if(currentStatus === 'all-filter-btn'){
+        
+        availableCount.innerText = cardsSection.children.length + ' Jobs';
+    }
+
 
     const noJobView = document.getElementById('no-jobs-view');
 
@@ -75,7 +89,7 @@ function toggleClick(id) {
         cardsSection.classList.remove('hidden')
         filterJobCardSection.classList.add('hidden')
 
-        availableCount.innerText = cardsSection.children.length + " jobs";
+
     }
     else if (id == 'rejected-btn') {
         cardsSection.classList.add('hidden');
@@ -88,7 +102,7 @@ function toggleClick(id) {
 mainContainer.addEventListener('click', function (event) {
     
     
-
+    document.createElement('button')
     if (event.target.classList.contains('card-interview-btn')) {
 
         const parentNode = event.target.parentNode.parentNode;
@@ -97,6 +111,7 @@ mainContainer.addEventListener('click', function (event) {
         const facilities = parentNode.querySelector('.facilities').innerText;
         const applicationStatus = 'Interviewed'
         const responsibilites = parentNode.querySelector('.responsibilites').innerText;
+        
 
 
         const cardsInformation = {
@@ -150,7 +165,7 @@ mainContainer.addEventListener('click', function (event) {
             renderInterviewSec()
         }
         calculateCount()
-
+  
     }
     // for delete trash icon btn
      else if (event.target.closest('.deleted-btn')) {
@@ -164,9 +179,11 @@ mainContainer.addEventListener('click', function (event) {
         interviewList = interviewList.filter(item => item.companyName !== companyName);
         rejectList = rejectList.filter(item => item.companyName !== companyName);
     
-        calculateCount();
+       
     }
+     
    }
+   calculateCount();
 
 })
 
@@ -182,6 +199,7 @@ function renderInterviewSec() {
     for (let interview of interviewList) {
         let div = document.createElement('div')
         div.className = "cards-container p-6 bg-base-100 rounded-[10px] mb-4"
+        const statusColorClass = interview.applicationStatus === 'Interviewed' ? 'btn-success text-white' : '';
         // div.className = "cards-container";
         div.innerHTML = `
        <div class="flex justify-between">
@@ -194,7 +212,7 @@ function renderInterviewSec() {
                             <p class="facilities  text-[#64748B] pt-4">${interview.facilities}</p>
                         </div>
                         <div>
-                            <p class="application-status  btn font-bold text-[#64748B]">${interview.applicationStatus}</p>
+                            <p class="application-status  btn font-bold text-[#64748B] ${statusColorClass}">${interview.applicationStatus}</p>
                             <p class="responsibilites text-[14px] text-[#323B49] pt-1.5">${interview.responsibilites}</p>
                         </div>
                         <div class="flex gap-4">
@@ -209,11 +227,8 @@ function renderInterviewSec() {
                     </div>
                 </div>
         `
-
-        filterJobCardSection.appendChild(div)
-        
+        filterJobCardSection.appendChild(div)   
     }
-   
 }
 
 function renderRejectedSec() {
@@ -223,6 +238,7 @@ function renderRejectedSec() {
     for (let reject of rejectList) {
         let div = document.createElement('div')
         div.className = "cards-container p-6 bg-base-100 rounded-[10px] mb-4"
+        const statusColorClass = reject.applicationStatus === 'Rejected' ? 'btn-error text-white' : '';
         div.innerHTML = `
        <div class="flex justify-between">
                     <div class="space-y-5">
@@ -234,7 +250,7 @@ function renderRejectedSec() {
                             <p class="facilities  text-[#64748B] pt-4">${reject.facilities}</p>
                         </div>
                         <div>
-                            <p class="application-status  btn font-bold text-[#64748B]">${reject.applicationStatus}</p>
+                            <p class="application-status  btn font-bold text-[#64748B] ${statusColorClass}">${reject.applicationStatus}</p>
                             <p class="responsibilites text-[14px] text-[#323B49] pt-1.5">${reject.responsibilites}</p>
                         </div>
                         <div class="flex gap-4">
