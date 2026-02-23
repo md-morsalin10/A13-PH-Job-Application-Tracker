@@ -135,7 +135,7 @@ mainContainer.addEventListener('click', function (event) {
         }
         calculateCount()
     }
-    
+
     else if (event.target.classList.contains('card-reject-btn')) {
 
         const parentNode = event.target.parentNode.parentNode;
@@ -177,11 +177,8 @@ mainContainer.addEventListener('click', function (event) {
         const companyName = cardWrapper.querySelector('.company-name').innerText;
        
         cardWrapper.remove();
-       
         interviewList = interviewList.filter(item => item.companyName !== companyName);
         rejectList = rejectList.filter(item => item.companyName !== companyName);
-    
-       
     }
      
    }
