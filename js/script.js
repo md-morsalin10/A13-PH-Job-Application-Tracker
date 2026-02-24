@@ -2,7 +2,7 @@ let interviewList = [];
 let rejectList = [];
 let currentStatus = "all-filter-btn";
 
-// for count 
+// for total, interview, reject and available count get
 const totalCount = document.getElementById('total');
 const interviewCount = document.getElementById('interview-count');
 const rejectedCount = document.getElementById('reject-count');
@@ -10,32 +10,35 @@ const availableCount= document.getElementById('available-count');
 
 
 
-//get all btn-filter
+//get all btn-filter for toggle function
 const allFilterBtn = document.getElementById("all-filter-btn");
 const interviewBtn = document.getElementById("interview-btn");
 const rejectedBtn = document.getElementById("rejected-btn");
+
 // get main tag for event delegation
 const mainContainer = document.querySelector('main');
-
 
 // get filter section 
 const filterJobCardSection = document.getElementById('filter-job-cards');
 
-// get cards 
+// get card main section 
 const cardsSection = document.getElementById('card');
+
 function calculateCount() {
     totalCount.innerText = cardsSection.children.length;
     interviewCount.innerText = interviewList.length;
     rejectedCount.innerText = rejectList.length;
+
+    const availableTotal = cardsSection.children.length;
     
 
     if (currentStatus === 'interview-btn') {
         
-        availableCount.innerText = interviewList.length + ' of 8 Jobs';
+        availableCount.innerText = interviewList.length + ` of ${availableTotal} job`;
     } 
     else if (currentStatus === 'rejected-btn') {
         
-        availableCount.innerText = rejectList.length + ' of 8 Jobs';
+        availableCount.innerText = rejectList.length + ` of ${availableTotal} job`;
     } 
     else if(currentStatus === 'all-filter-btn'){
         
@@ -72,9 +75,12 @@ function toggleClick(id) {
     allFilterBtn.classList.add('btn')
     interviewBtn.classList.add('btn')
     rejectedBtn.classList.add('btn')
-
+    
+    // get the clicked btn
     const selectedBtn = document.getElementById(id);
+
     selectedBtn.classList.add('btn-primary');
+    
     currentStatus = id
     
 
@@ -197,7 +203,7 @@ function renderInterviewSec() {
 
     for (let interview of interviewList) {
         let div = document.createElement('div')
-        div.className = "cards-container p-6 bg-base-100 rounded-[10px] mb-4"
+        div.className = "cards-container p-6 bg-base-100 rounded-[10px] mb-4 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-green-400 border-2 border-transparent cursor-pointer"
         const statusColorClass = interview.applicationStatus === 'Interviewed' ? 'btn-success text-white' : '';
         div.innerHTML = `
        <div class="flex justify-between">
@@ -236,7 +242,7 @@ function renderRejectedSec() {
     
     for (let reject of rejectList) {
         let div = document.createElement('div')
-        div.className = "cards-container p-6 bg-base-100 rounded-[10px] mb-4"
+        div.className = "cards-container p-6 bg-base-100 rounded-[10px] mb-4 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-red-400 border-2 border-transparent cursor-pointer"
         const statusColorClass = reject.applicationStatus === 'Rejected' ? 'btn-error text-white' : '';
         div.innerHTML = `
        <div class="flex justify-between">

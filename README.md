@@ -24,7 +24,7 @@
         i. Create the Element
         First of all i need to create an element using  document.createElement() method . After that i will Add content and styles in that element. 
         
-        example : 
+        for example : 
         // Create a new <div> element
         const newCard = document.createElement('div');
 
